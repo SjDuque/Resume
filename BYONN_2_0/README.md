@@ -1,4 +1,4 @@
-Build-Your-Own-Neural-Network-
+Build Your Own Neural Network 
 
 This is a neural network builder for classifying digits built from the ground-up in Processing 3; I even made the matrix library. I am still working on an intuitive user interface with creating the neural network. For now the only way to change the dimensions or learning rate are through the .pde files themselves.
 
