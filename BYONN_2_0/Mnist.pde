@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import java.util.zip.GZIPInputStream;
 
 class Mnist{
   ReadFiles trainImages;
@@ -12,10 +13,10 @@ class Mnist{
   int cols; //this is the reduced columns
 
   Mnist() throws IOException{ // this loads up the mnist database
-    trainImages = new ReadFiles(sketchPath() + "/train-images.idx3-ubyte",1);
-    trainLabels = new ReadFiles(sketchPath() + "/train-labels.idx1-ubyte");
-    testImages = new ReadFiles(sketchPath()  + "/test-images.idx3-ubyte",1);
-    testLabels = new ReadFiles(sketchPath() + "/test-labels.idx1-ubyte");
+    trainImages = new ReadFiles(sketchPath() + "/train-images.gz",1);
+    trainLabels = new ReadFiles(sketchPath() + "/train-labels.gz");
+    testImages = new ReadFiles(sketchPath()  + "/test-images.gz",1);
+    testLabels = new ReadFiles(sketchPath() + "/test-labels.gz");
     mTrain = trainImages.m;
     mTest = testImages.m;
     rows = testImages.rows; //this is so that I can reduce the number of features
@@ -46,7 +47,7 @@ class ReadFiles{
   int actualRows; //this is the rows from the mnist data
   int actualCols; //this is the cols from the mnist data
   ReadFiles(String dir, int i) throws IOException{
-    input = new DataInputStream(new FileInputStream(dir));
+    input = new DataInputStream(new GZIPInputStream(new FileInputStream(dir)));
     magicNumber = input.readInt();
     m = input.readInt();//total number of inputs
     actualRows = input.readInt();
@@ -56,7 +57,7 @@ class ReadFiles{
     cols = desiredCols;
   }
   ReadFiles(String dir)throws IOException{
-    input = new DataInputStream(new FileInputStream(dir));
+    input = new DataInputStream(new GZIPInputStream(new FileInputStream(dir)));
     magicNumber = input.readInt();
     m = input.readInt();
   }
